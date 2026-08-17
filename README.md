@@ -37,6 +37,12 @@ npm run package    # build and package the app for the Cribl App Platform
 The built app is committed to `main` under `static/` (the app bundle) and `default/`
 (pack config), so Cribl's **Import from Git** can serve it directly from the default branch.
 
+Click **Import from Git** > paste this link and click **Import**:
+
+```
+https://github.com/Cribl-Community/cc-ufe-migrator
+```
+
 > **Important:** `static/` is build output. It does **not** update automatically when you
 > change source under `src/`. After any source change, rebuild and re-commit the pack layout,
 > otherwise `main` will serve a stale build:
