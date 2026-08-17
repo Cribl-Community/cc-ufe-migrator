@@ -374,18 +374,21 @@ export default function InputsModal({
     return () => window.removeEventListener('keydown', handler);
   }, [onClose]);
 
-  // Reset selection when tab changes
-  useEffect(() => {
+  // Reset selection when the tab changes (handled on click — event handlers may touch refs)
+  const handleTabChange = useCallback((tab: 'default' | 'local') => {
+    setActiveTab(tab);
     setSelectedStanza(null);
     updateSelected(() => new Set());
     setShowExcludeInput(false);
     setShowMigrateInput(false);
-  }, [activeTab, updateSelected]);
+  }, [updateSelected]);
 
-  // Close export modal when stanza changes
-  useEffect(() => {
+  // Close export modal when the selected stanza changes (adjust state during render — avoids an effect)
+  const [prevStanza, setPrevStanza] = useState(selectedStanza);
+  if (selectedStanza !== prevStanza) {
+    setPrevStanza(selectedStanza);
     if (selectedStanza) setExportOpen(false);
-  }, [selectedStanza]);
+  }
 
   const activeContent = activeTab === 'default' ? inputsData?.default : inputsData?.local;
   const stanzas = useMemo(() => parseStanzas(activeContent ?? ''), [activeContent]);
@@ -481,7 +484,7 @@ const isMultiSelect = selectedHeaders.size > 1;
                 return (
                   <button
                     key={tab}
-                    onClick={() => setActiveTab(tab)}
+                    onClick={() => handleTabChange(tab)}
                     style={{ padding: '7px 16px', borderRadius: '6px 6px 0 0', border: '1px solid', borderBottom: active ? '1px solid #0f0f18' : '1px solid rgba(255,255,255,0.08)', borderColor: active ? 'rgba(34,211,238,0.3)' : 'rgba(255,255,255,0.08)', background: active ? 'rgba(34,211,238,0.08)' : 'transparent', color: active ? '#22d3ee' : 'rgba(255,255,255,0.4)', fontSize: '11px', fontFamily: "'JetBrains Mono', monospace", cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '-1px', position: 'relative', zIndex: 1 }}
                   >
                     /{tab}/inputs.conf
