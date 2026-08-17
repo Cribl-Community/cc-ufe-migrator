@@ -11,6 +11,10 @@ A Cribl App Platform application that assists with viewing `serverclass.conf` an
 
 The app runs inside a sandboxed iframe on the Cribl App Platform. All Cribl API calls are transparently proxied through the parent window (authentication is injected by the platform — the app never handles auth tokens). See [AGENTS.md](AGENTS.md) for platform details.
 
+## Current Limitations
+
+- **File monitors only** — the migrator currently supports migrating file monitor inputs (`[monitor://...]`) only. Other Universal Forwarder input types (e.g. network inputs, scripted inputs, WinEventLog) are not yet handled.
+
 ## Tech stack
 
 - React 19 + TypeScript
