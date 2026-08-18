@@ -33,7 +33,7 @@
   },
   "displayName": "UFE Migrator",
   "description": "Assists with Viewing Serverclass.conf and migrating monitor stanzas to Edge agents",
-  "author": "cwinarski@cribl.io",
+  "author": "Chris Winarski - cwinarski@cribl.io",
   "tags": {
     "product": [
       "edge",
